@@ -9,7 +9,7 @@
 }
 
 .rooms {
-    margin-left:35px;
+    margin-left: 35px;
 }
 
 label {
@@ -79,27 +79,38 @@ input[type="url"] {
 }
 
 .impute-box {
-    margin-left:35px;
+    margin-left: 35px;
 }
 
-.header{
+.header {
     background-color: #007bff;
 }
-.header-container{
+
+.header-container {
     justify-content: space-between;
     display: flex;
 }
 
-.profile{
+.profile {
     width: 130px;
 }
-.profile-img{
+
+.profile-img {
     margin-left: -106px;
     height: 100%;
 }
-.header-control-board{
+
+.header-control-board {
     margin-top: 48px;
 }
-#room-coordinator{
+
+#room-coordinator {
     color: red;
+}
+
+.switch {
+    padding: 5px;
+    background-color: red;
+    border-radius: 5px;
+    color: white;
 }

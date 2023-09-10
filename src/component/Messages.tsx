@@ -1,11 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Message from './message/Message';
 import {MessageCollectionProps, MessageData} from "../types";
+import {parseJsonString} from "../utils.d";
 
 const Messages = ({messages, roomID, chatHistory}: MessageCollectionProps) => {
-    const parseJsonString = (jsonString: string): MessageData => {
-        return JSON.parse(jsonString);
-    }
+    const [isOpen, setIsOpen] = useState(false)
     const mappingChat = (data: string[]) => {
        return data.map((message: string, index: number) => {
             return roomID == parseJsonString(message).roomId ?
@@ -19,10 +18,14 @@ const Messages = ({messages, roomID, chatHistory}: MessageCollectionProps) => {
         })
     }
 
+    const toOpen = () => {
+        setIsOpen(!isOpen);
+    }
+
     return (
         <>
-            <h1>Chat history:</h1>
-            <div>{mappingChat(chatHistory)}</div>
+            <h1>Chat history: <span  className="switch" onClick={toOpen}>{!isOpen? "open" : "close"}</span></h1>
+            <div>{isOpen && mappingChat(chatHistory)}</div>
             <h1>Current chat:</h1>
             <div>{mappingChat(messages)}</div>
         </>

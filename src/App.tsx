@@ -4,47 +4,43 @@ import io, {Socket} from 'socket.io-client'
 import Messages from './component/Messages';
 import MessageInput from "./component/message-input/MessageInput";
 import { JoinedData, RoomButtonComponent} from "./types";
+import {getElementValue} from "./utils.d";
+
+
 
 function App() {
     const [socket, setSocket] = useState<Socket>();
     const [messages, setMessages] = useState<string[]>([]);
-    const [room, setRoom] = useState<string | null>('');
+    const [room, setRoom] = useState<string>('');
     const [image, setImage] = useState<string>('');
     const [roomCount, setRoomCount] = useState<number>(3);
     const [data, setData] = useState<string[]>([])
     const [isAuthenticate, setIsAuthenticate] = useState<boolean>(false)
 
-    let username: any = document.querySelector(".username");
-    let url: any = document.querySelector(".imageURL");
+    const toGroupJoinedData = (room: string): JoinedData => {
+        const username: string = getElementValue(".username");
+        const url: string = getElementValue(".imageURL");
+        return  {
+            joinedRoomId:room,
+            username: username,
+            imageURL: url,
+        };
+    }
 
-    const send = (value: any ): void => {
-        const joinedData: JoinedData = {
-            joinedRoomId: room,
-            username: username.value,
-            imageURL: url.value,
-        }
-
-        socket?.emit('joinRoom', joinedData as any);
+    const send = (value: any): void => {
+        const joinedData: JoinedData  = toGroupJoinedData(room);
+        socket?.emit('joinRoom', joinedData);
         socket?.emit('message', value);
     }
 
     const toJoin = (e: any): void => {
-        let joinedRoomId: string | null;
-        e.target.value === 'general' ? joinedRoomId = null : joinedRoomId = e.target.value;
-
-        const joinedData: JoinedData = {
-            joinedRoomId,
-            username: username.value,
-            imageURL: url.value,
-        };
-
-        if (username && url) {
-            setIsAuthenticate(true);
-        }
-
+        let joinedRoomId: string;
+        e.target.value === 'general' ? joinedRoomId = "" : joinedRoomId = e.target.value;
+        const joinedData: JoinedData  = toGroupJoinedData(joinedRoomId)
+        if (joinedData.username && joinedData.imageURL) setIsAuthenticate(true);
         setRoom(joinedRoomId);
-        setImage(url.value);
-        socket?.emit('joinRoom', joinedData as any);
+        setImage(joinedData.imageURL);
+        socket?.emit('joinRoom', joinedData);
     }
 
     const [roomCollection, setRoomCollection] = useState<any[]>([

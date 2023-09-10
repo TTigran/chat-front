@@ -33,7 +33,7 @@ export interface DomElement {
 }
 
 export interface JoinedData {
-    joinedRoomId: string | null,
+    joinedRoomId: string ,
     username: string,
     imageURL: string,
 }
