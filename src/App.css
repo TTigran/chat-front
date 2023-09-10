@@ -1,0 +1,105 @@
+.App {
+    text-align: center;
+    margin-top: 200px;
+}
+
+.rooms-container {
+    justify-content: flex-start;
+    display: flex;
+}
+
+.rooms {
+    margin-left:35px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Styles for input elements */
+input[type="button"],
+input[type="text"],
+input[type="url"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+input[type="button"] {
+    width: 100%;
+}
+
+/* Add specific styles for the "General" button */
+input[type="button"][value="general"] {
+    background-color: #0056b3;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Add specific styles for the "Room 1" button */
+input[type="button"][value="room1"] {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+/* Add specific styles for the "Room 2" button */
+input[type="button"][value="room2"] {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+input[type="button"][value="Add Room"] {
+    background-color: red;
+    color: white;
+    cursor: pointer;
+}
+
+/* Styles for the "Username" and "Image URL" input fields */
+input[type="text"],
+input[type="url"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.register-imputes {
+    justify-content: flex-start;
+    display: flex;
+}
+
+.impute-box {
+    margin-left:35px;
+}
+
+.header{
+    background-color: #007bff;
+}
+.header-container{
+    justify-content: space-between;
+    display: flex;
+}
+
+.profile{
+    width: 130px;
+}
+.profile-img{
+    margin-left: -106px;
+    height: 100%;
+}
+.header-control-board{
+    margin-top: 48px;
+}
+#room-coordinator{
+    color: red;
+}

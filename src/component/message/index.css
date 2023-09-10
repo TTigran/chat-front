@@ -1,0 +1,46 @@
+.chat-message {
+
+    display: flex;
+    margin: 10px;
+    max-width: 80%; /* Adjust the maximum width as needed */
+}
+
+/* Styles for the user avatar */
+.user-avatar {
+    width: 40px; /* Adjust the size as needed */
+    height: 40px; /* Adjust the size as needed */
+    border-radius: 50%; /* Makes it a circular avatar */
+    margin-right: 10px;
+}
+
+/* Styles for the message content */
+.message-content {
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f0f0; /* Background color for the message container */
+    padding: 10px;
+    border-radius: 10px;
+}
+
+/* Styles for the message header */
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+/* Styles for the username and date */
+.username {
+    font-weight: bold;
+}
+
+.date {
+    font-size: 0.8rem;
+    color: #777;
+}
+
+/* Styles for the message text */
+.message-text {
+    margin: 0;
+}
