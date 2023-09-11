@@ -3,9 +3,8 @@ import './App.css';
 import io, {Socket} from 'socket.io-client'
 import Messages from './component/Messages';
 import MessageInput from "./component/message-input/MessageInput";
-import { JoinedData, RoomButtonComponent} from "./types";
+import {JoinedData, RoomButtonComponent} from "./types";
 import {getElementValue} from "./utils.d";
-
 
 
 function App() {
@@ -20,15 +19,15 @@ function App() {
     const toGroupJoinedData = (room: string): JoinedData => {
         const username: string = getElementValue(".username");
         const url: string = getElementValue(".imageURL");
-        return  {
-            joinedRoomId:room,
+        return {
+            joinedRoomId: room,
             username: username,
             imageURL: url,
         };
     }
 
     const send = (value: any): void => {
-        const joinedData: JoinedData  = toGroupJoinedData(room);
+        const joinedData: JoinedData = toGroupJoinedData(room);
         socket?.emit('joinRoom', joinedData);
         socket?.emit('message', value);
     }
@@ -36,7 +35,7 @@ function App() {
     const toJoin = (e: any): void => {
         let joinedRoomId: string;
         e.target.value === 'general' ? joinedRoomId = "" : joinedRoomId = e.target.value;
-        const joinedData: JoinedData  = toGroupJoinedData(joinedRoomId)
+        const joinedData: JoinedData = toGroupJoinedData(joinedRoomId)
         if (joinedData.username && joinedData.imageURL) setIsAuthenticate(true);
         setRoom(joinedRoomId);
         setImage(joinedData.imageURL);
@@ -98,7 +97,7 @@ function App() {
     const toCollect = () => {
         return roomCollection.map((room: RoomButtonComponent, index: number) => {
             return <div key={index} className={room.className}>
-                <input type={room.type} value={room.value}  onClick={room.eventMethod}
+                <input className="room-box" type={room.type} value={room.value} onClick={room.eventMethod}
                 />
             </div>
         })
@@ -106,24 +105,38 @@ function App() {
 
     return (
         <>
-            <h1>Chat Application:
-                <span id='room-coordinator'>ROOM:{" "}{(room === null) ? 'General' : room}</span>:User
-                <span
-                    style={{color: isAuthenticate ? 'green' : 'red'}}>{isAuthenticate ? 'Authorized' : 'Unauthorized'}</span>
-            </h1>
+            <header>
+                <figure className="profile-banner">
+                    <img src={"https://unsplash.it/1715/300"} alt="Profile banner"/>
+                </figure>
+                <figure className="profile-picture"
+                        style={{backgroundImage: `url('${image ? image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNJEbNBW7WgMiqHuSO0OPtl8yxP218c-U-4Q&usqp=CAU'}')`}}>
+                </figure>
+                <div className="profile-stats">
+                    <a onClick={addRoom} className="follow">
+                        Add room
+                    </a>
+                    <a className="follow">
+                        <b>
+                            <span id='room-coordinator'>ROOM:{"     "}{(room === null) ? 'General' : room}</span>:User
+                            <span
+                                style={{color: isAuthenticate ? 'green' : 'red'}}>{"    "}{isAuthenticate ? 'Authorized' : 'Unauthorized'}</span>
+                        </b>
+                    </a>
+                </div>
+            </header>
+
+
             <div className='header'>
                 <div className='header-container'>
                     <div className='header-control-board'>
                         <div className='rooms-container'>
                             <div className="rooms">
-                                <input type='button' value='Add Room' onClick={addRoom}/>
-                            </div>
-                            <div className="rooms">
                                 <input type='button' value='general' onClick={toJoin}/>
                             </div>
                             {toCollect()}
                         </div>
-                        <div className='register-imputes'>
+                        <div className='register-imputes rooms-container'>
                             <div className='impute-box'>
                                 <label>
                                     Username:
@@ -137,10 +150,6 @@ function App() {
                                 </label>
                             </div>
                         </div>
-                    </div>
-                    <div className='profile'>
-                        <img className='profile-img'
-                             src={image ? image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNJEbNBW7WgMiqHuSO0OPtl8yxP218c-U-4Q&usqp=CAU'}/>
                     </div>
                 </div>
             </div>
