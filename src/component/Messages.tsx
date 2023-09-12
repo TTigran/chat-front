@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React, { useState} from 'react';
 import Message from './message/Message';
 import {MessageCollectionProps} from "../types";
 import {parseJsonString} from "../utils.d";
 
-const Messages = ({messages, roomID, chatHistory}: MessageCollectionProps) => {
+const Messages = ({messages, roomID, chatHistory, onlineClient, socketId}: MessageCollectionProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const mappingChat = (data: string[]) => {
@@ -12,14 +12,16 @@ const Messages = ({messages, roomID, chatHistory}: MessageCollectionProps) => {
                 <Message key={index}
                          image={parseJsonString(message).imageURL}
                          message={parseJsonString(message).message}
-                         username={parseJsonString(message).username + parseJsonString(message).clientId}
+                         username={parseJsonString(message).username}
                          date={parseJsonString(message).date}
                          roomId={parseJsonString(message).roomId}
+                         isOnline={onlineClient.includes(parseJsonString(message).clientId)}
                 /> : "";
         })
     }
 
     const toOpen = () => {
+        console.log(localStorage.getItem('online'));
         setIsOpen(!isOpen);
     }
 

@@ -3,7 +3,8 @@ export interface MessageDataProps {
     username: string,
     date: string,
     message: string,
-    roomId: string
+    roomId: string,
+    isOnline: boolean
 }
 
 export interface MessageData {
@@ -18,22 +19,26 @@ export interface MessageData {
 export interface MessageCollectionProps {
     messages: string[],
     roomID: string | null,
-    chatHistory: string[]
+    chatHistory: string[],
+    onlineClient: string[],
+    socketId: string
 }
 
 export interface RoomButtonComponent {
     className: string,
     type: string,
     value: string,
-    eventMethod:()=>{},
-}
-
-export interface DomElement {
-    value: string
+    eventMethod: () => {},
 }
 
 export interface JoinedData {
-    joinedRoomId: string ,
+    joinedRoomId: string,
     username: string,
     imageURL: string,
+    clientId: string | undefined,
+}
+
+export interface Online {
+    statusIndicator: boolean,
+    onlineClientIdList: string [],
 }

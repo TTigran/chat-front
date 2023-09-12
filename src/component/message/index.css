@@ -15,9 +15,10 @@
 
 /* Styles for the message content */
 .message-content {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    background-color: #f0f0f0; /* Background color for the message container */
+    background-color: #5bc0de;
     padding: 10px;
     border-radius: 10px;
 }
@@ -32,6 +33,7 @@
 
 /* Styles for the username and date */
 .username {
+    color: red;
     font-weight: bold;
 }
 

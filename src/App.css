@@ -89,6 +89,7 @@ input[type="url"] {
 }
 
 .header-container {
+    background-color: #5bc0de;
     justify-content: space-between;
     display: flex;
 }
@@ -270,4 +271,11 @@ header>h1 {
 
 .rooms > .room-box{
     border-radius: 50%;
+}
+
+.online{
+    color: green;
+}
+.offline{
+    color: red;
 }

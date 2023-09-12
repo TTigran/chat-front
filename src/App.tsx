@@ -3,7 +3,7 @@ import './App.css';
 import io, {Socket} from 'socket.io-client'
 import Messages from './component/Messages';
 import MessageInput from "./component/message-input/MessageInput";
-import {JoinedData, RoomButtonComponent} from "./types";
+import {JoinedData, Online, RoomButtonComponent} from "./types";
 import {getElementValue} from "./utils.d";
 
 
@@ -13,8 +13,9 @@ function App() {
     const [room, setRoom] = useState<string>('');
     const [image, setImage] = useState<string>('');
     const [roomCount, setRoomCount] = useState<number>(3);
-    const [data, setData] = useState<string[]>([])
-    const [isAuthenticate, setIsAuthenticate] = useState<boolean>(false)
+    const [data, setData] = useState<string[]>([]);
+    const [isAuthenticate, setIsAuthenticate] = useState<boolean>(false);
+    const [onlineClient, setOnlineClient] = useState<string[]>([]);
 
     const toGroupJoinedData = (room: string): JoinedData => {
         const username: string = getElementValue(".username");
@@ -23,6 +24,7 @@ function App() {
             joinedRoomId: room,
             username: username,
             imageURL: url,
+            clientId: socket?.id,
         };
     }
 
@@ -67,6 +69,7 @@ function App() {
     }
 
     useEffect(() => {
+
         socket?.on('message', messageListener)
         return (): void => {
             socket?.off('message', messageListener)
@@ -74,9 +77,12 @@ function App() {
     }, [messageListener]);
 
     useEffect((): void => {
+
+
         fetch('http://localhost:4000/messages')
             .then((response: Response) => response.json())
             .then((data): void => {
+
                 setData(data);
             }).catch((error): void => {
             console.error('Error fetching data:', error);
@@ -102,6 +108,7 @@ function App() {
             </div>
         })
     }
+
 
     return (
         <>
@@ -149,12 +156,15 @@ function App() {
                                     <input type='url' placeholder='Input image url' className='imageURL'/>
                                 </label>
                             </div>
+                            <div className='impute-box'>
+                                {socket?.id}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             {isAuthenticate && <>
-                <Messages chatHistory={data} roomID={room} messages={messages}/>
+                <Messages socketId={socket?.id as string}  onlineClient={onlineClient} chatHistory={data} roomID={room} messages={messages}/>
                 <MessageInput send={send}/>
             </>}
         </>
