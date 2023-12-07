@@ -1,9 +1,10 @@
 import React from 'react';
+import './index.css'
 
 function StatusIndicator({ isOnline }: {isOnline: boolean}) {
   return (
     <>
-      <span className={`${isOnline ? 'online' : 'offline'}`}>{isOnline ? 'online' : 'offline'}</span>
+      <div className={`${isOnline ? 'online' : 'offline'}`}></div>
     </>
   );
 }

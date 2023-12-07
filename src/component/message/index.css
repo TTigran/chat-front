@@ -15,10 +15,11 @@
 
 /* Styles for the message content */
 .message-content {
+    color: gold;
     width: 100%;
     display: flex;
     flex-direction: column;
-    background-color: #5bc0de;
+    background: transparent;
     padding: 10px;
     border-radius: 10px;
 }
@@ -43,6 +44,38 @@
 }
 
 /* Styles for the message text */
+.message-text {
+    margin: 0;
+}
+
+.chat-message {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+
+
+@keyframes onlineAnimation {
+    0% {
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0.8);
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(76, 175, 80, 0);
+    }
+}
+
+.date {
+    font-size: 12px;
+    color: #888;
+}
+
 .message-text {
     margin: 0;
 }

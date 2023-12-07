@@ -4,7 +4,10 @@ import io, {Socket} from 'socket.io-client'
 import Messages from './component/Messages';
 import MessageInput from "./component/message-input/MessageInput";
 import {JoinedData, Online, RoomButtonComponent} from "./types";
-import {getElementValue} from "./utils.d";
+import {Login} from "./component/authentication/Login";
+
+
+export var user: any = {}
 
 
 function App() {
@@ -16,14 +19,77 @@ function App() {
     const [data, setData] = useState<string[]>([]);
     const [isAuthenticate, setIsAuthenticate] = useState<boolean>(false);
     const [onlineClient, setOnlineClient] = useState<string[]>([]);
+    const [userData, setUserData] = useState<any>(null);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [isLogged, setIsLogged] = useState<null | boolean>(false);
+
+    const handleUsernameChange = (event: any) => {
+        setUsername(event.target.value);
+    };
+
+    const handlePasswordChange = (event: any) => {
+        setPassword(event.target.value);
+    };
+
+    // useEffect( () => {
+    //     if(localStorage.getItem('token')){
+    //         setIsLogged(true)
+    //     } else {
+    //         setIsLogged(false)
+    //     }
+    // }, []);
+
+    const handleSubmit = async (event: any) => {
+        event.preventDefault();
+        try {
+            const response = await fetch('http://localhost:4000/auth/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json',},
+                body: JSON.stringify({username, password}),
+            });
+            if (response.ok) {
+                const data = await response.json();
+                localStorage.setItem('token', data.token);
+                setIsLogged(true);
+                await getUserData()
+            } else {
+                console.error('Authentication failed');
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
+    };
+
+
+    const getUserData = async () => {
+        try {
+            const response = await fetch(`http://localhost:4000/users?username=${username}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setUserData(data)
+                user = data
+            } else {
+                console.error('Authentication failed');
+            }
+
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
+    }
 
     const toGroupJoinedData = (room: string): JoinedData => {
-        const username: string = getElementValue(".username");
-        const url: string = getElementValue(".imageURL");
+
         return {
             joinedRoomId: room,
-            username: username,
-            imageURL: url,
+            username: user.username,
+            imageURL: user.imageUrl,
             clientId: socket?.id,
         };
     }
@@ -38,7 +104,7 @@ function App() {
         let joinedRoomId: string;
         e.target.value === 'general' ? joinedRoomId = "" : joinedRoomId = e.target.value;
         const joinedData: JoinedData = toGroupJoinedData(joinedRoomId)
-        if (joinedData.username && joinedData.imageURL) setIsAuthenticate(true);
+        console.log(joinedData, "Joined")
         setRoom(joinedRoomId);
         setImage(joinedData.imageURL);
         socket?.emit('joinRoom', joinedData);
@@ -69,25 +135,24 @@ function App() {
     }
 
     useEffect(() => {
-
         socket?.on('message', messageListener)
         return (): void => {
             socket?.off('message', messageListener)
         }
     }, [messageListener]);
 
+
     useEffect((): void => {
-
-
         fetch('http://localhost:4000/messages')
             .then((response: Response) => response.json())
             .then((data): void => {
-
                 setData(data);
             }).catch((error): void => {
             console.error('Error fetching data:', error);
         });
     }, []);
+
+
 
     const addRoom = (): void => {
         setRoomCount(roomCount + 1);
@@ -112,61 +177,58 @@ function App() {
 
     return (
         <>
-            <header>
-                <figure className="profile-banner">
-                    <img src={"https://unsplash.it/1715/300"} alt="Profile banner"/>
-                </figure>
-                <figure className="profile-picture"
-                        style={{backgroundImage: `url('${image ? image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNJEbNBW7WgMiqHuSO0OPtl8yxP218c-U-4Q&usqp=CAU'}')`}}>
-                </figure>
-                <div className="profile-stats">
-                    <a onClick={addRoom} className="follow">
-                        Add room
-                    </a>
-                    <a className="follow">
-                        <b>
-                            <span id='room-coordinator'>ROOM:{"     "}{(room === null) ? 'General' : room}</span>:User
-                            <span
-                                style={{color: isAuthenticate ? 'green' : 'red'}}>{"    "}{isAuthenticate ? 'Authorized' : 'Unauthorized'}</span>
-                        </b>
-                    </a>
-                </div>
-            </header>
-
-
-            <div className='header'>
-                <div className='header-container'>
-                    <div className='header-control-board'>
-                        <div className='rooms-container'>
-                            <div className="rooms">
-                                <input type='button' value='general' onClick={toJoin}/>
+            {isLogged ?  <div>
+                <header>
+                    <div className="header-container-profile">
+                        <h1>{username}</h1>
+                        <div className="avatar-container">
+                            <div className="avatar">
+                                <img
+                                    src={userData ? userData.imageUrl: "https://img.freepik.com/premium-vector/anonymous-user-circle-icon-vector-illustration-flat-style-with-long-shadow_520826-1931.jpg"}
+                                    alt="Avatar"/>
                             </div>
-                            {toCollect()}
                         </div>
-                        <div className='register-imputes rooms-container'>
-                            <div className='impute-box'>
-                                <label>
-                                    Username:
-                                    <input type='text' placeholder='Input username ...' className='username'/>
-                                </label>
-                            </div>
-                            <div className='impute-box'>
-                                <label>
-                                    Image URL for Avatar:
-                                    <input type='url' placeholder='Input image url' className='imageURL'/>
-                                </label>
-                            </div>
-                            <div className='impute-box'>
-                                {socket?.id}
+                        <div className="social-icons">
+                            <span className="social-icon">&#128172;</span>
+                            <span className="social-icon">&#128276;</span>
+                            <span className="social-icon">&#128640;</span>
+                        </div>
+                    </div>
+                </header>
+
+                <div className='header'>
+                    <div className='header-container'>
+                        <div className='header-control-board'>
+                            <div className='rooms-container'>
+                                <div  className="rooms">
+                                    <input type='button' value='+' onClick={addRoom}/>
+                                </div>
+                                <div className="rooms">
+                                    <input type='button' value='general' onClick={toJoin}/>
+                                </div>
+                                {toCollect()}
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            {isAuthenticate && <>
-                <Messages socketId={socket?.id as string}  onlineClient={onlineClient} chatHistory={data} roomID={room} messages={messages}/>
-                <MessageInput send={send}/>
-            </>}
+
+                <>
+                    <Messages
+                        socketId={socket?.id as string}
+                        onlineClient={onlineClient}
+                        chatHistory={data}
+                        roomID={room}
+                        messages={messages}
+                    />
+                    <MessageInput send={send}/>
+                </>
+            </div> : <Login
+                username={username}
+                password={password}
+                onLogin={handleSubmit}
+                handleUsernameChange={handleUsernameChange}
+                handlePasswordChange={handlePasswordChange}
+            /> }
         </>
     );
 };
