@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { IoSendSharp } from "react-icons/io5";
 import './index.css'
 
 const MessageInput = ({send}: { send: (val: string, e: any) => void }) => {
@@ -12,10 +13,11 @@ const MessageInput = ({send}: { send: (val: string, e: any) => void }) => {
                 placeholder="Type your message..."
                 value={value}
             />
-            <button
+
+            <IoSendSharp
                 className='send-button'
                 onClick={(e) => send(value,e)}
-            >Send</button>
+            />
         </div>
     );
 };

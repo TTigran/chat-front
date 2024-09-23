@@ -18,7 +18,7 @@ function App() {
     const [roomCount, setRoomCount] = useState<number>(3);
     const [data, setData] = useState<string[]>([]);
     const [isAuthenticate, setIsAuthenticate] = useState<boolean>(false);
-    const [onlineClient, setOnlineClient] = useState<string[]>([]);
+    const [onlineClient, setOnlineClient] = useState<boolean | undefined>(true);
     const [userData, setUserData] = useState<any>(null);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -180,48 +180,36 @@ function App() {
             {isLogged ?  <div>
                 <header>
                     <div className="header-container-profile">
-                        <h1>{username}</h1>
                         <div className="avatar-container">
                             <div className="avatar">
                                 <img
-                                    src={userData ? userData.imageUrl: "https://img.freepik.com/premium-vector/anonymous-user-circle-icon-vector-illustration-flat-style-with-long-shadow_520826-1931.jpg"}
+                                    src={userData ? userData.imageUrl : "https://img.freepik.com/premium-vector/anonymous-user-circle-icon-vector-illustration-flat-style-with-long-shadow_520826-1931.jpg"}
                                     alt="Avatar"/>
                             </div>
-                        </div>
-                        <div className="social-icons">
-                            <span className="social-icon">&#128172;</span>
-                            <span className="social-icon">&#128276;</span>
-                            <span className="social-icon">&#128640;</span>
+                            <h1 style={{marginLeft: '10px', color: "white"}}>{username}</h1>
                         </div>
                     </div>
                 </header>
 
-                <div className='header'>
-                    <div className='header-container'>
-                        <div className='header-control-board'>
-                            <div className='rooms-container'>
-                                <div  className="rooms">
-                                    <input type='button' value='+' onClick={addRoom}/>
-                                </div>
-                                <div className="rooms">
-                                    <input type='button' value='general' onClick={toJoin}/>
-                                </div>
-                                {toCollect()}
-                            </div>
-                        </div>
+                <div className="chat-container">
+                    <div className="room-section">
+                        <input type="button" value="+" onClick={addRoom}/>
+                        <input type="button" value="general" onClick={toJoin}/>
+                        {toCollect()}
+                    </div>
+
+                    <div className="chat-section">
+                        <Messages
+                            socketId={socket?.id as string}
+                            onlineClient={true}
+                            chatHistory={data}
+                            roomID={room}
+                            messages={messages}
+                            loggedUsername={'Tigran'}
+                        />
+                        <MessageInput send={send}/>
                     </div>
                 </div>
-
-                <>
-                    <Messages
-                        socketId={socket?.id as string}
-                        onlineClient={onlineClient}
-                        chatHistory={data}
-                        roomID={room}
-                        messages={messages}
-                    />
-                    <MessageInput send={send}/>
-                </>
             </div> : <Login
                 username={username}
                 password={password}

@@ -4,7 +4,9 @@ export interface MessageDataProps {
     date: string,
     message: string,
     roomId: string,
-    isOnline: boolean
+    isOnline: boolean,
+    loggedUsername:string
+    num: number
 }
 
 export interface MessageData {
@@ -14,14 +16,17 @@ export interface MessageData {
     message: string,
     roomId: string,
     clientId: string,
+
 }
 
 export interface MessageCollectionProps {
     messages: string[],
     roomID: string | null,
     chatHistory: string[],
-    onlineClient: string[],
-    socketId: string
+    onlineClient: boolean,
+    socketId: string,
+    loggedUsername: string,
+
 }
 
 export interface RoomButtonComponent {

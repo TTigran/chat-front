@@ -1,25 +1,27 @@
 
-.online {
-    margin-left: -20px;
-    margin-top: 30px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    margin-right: 5px;
-    background-color: #4caf50; /* Green color for online status */
-    animation: pulse 0.8s infinite alternate; /* Pulsating animation */
-}
+
 
 .offline {
-    margin-left: -20px;
-    margin-top: 30px;
-    width: 10px;
     height: 10px;
-    border-radius: 50%;
+    width: 10px;
+    margin-left: -30px;
+    margin-top: 85px;
     margin-right: 5px;
+    border-radius: 50%;
     background-color: #e74c3c; /* Red color for offline status */
     animation: pulse 1s infinite alternate; /* Pulsating animation */
 }
+.online {
+    height: 10px;
+    width: 10px;
+    margin-left: -30px;
+    margin-top: 85px;
+    border-radius: 50%;
+    margin-right: 5px;
+    background-color: #4caf50; /* Red color for offline status */
+    animation: pulse 1s infinite alternate; /* Pulsating animation */
+}
+
 
 @keyframes pulse {
     0% {

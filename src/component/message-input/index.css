@@ -1,33 +1,42 @@
-
-.message-input-container {
-    margin-top: auto;
-    display: flex;
-    align-items: center;
-}
+/* Container styles */
 
 
+/* Input field styling */
 .message-input {
-    width: 90%;
-    flex-grow: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-right: 10px;
-    font-size: 16px;
+    flex-grow: 1; /* Allows the input to grow and fill the space */
+    margin-right: 15px; /* Space between input and button */
+    padding: 15px 20px; /* Ample padding for ease of typing */
+    font-size: 18px; /* Slightly larger font for readability */
+    border: 2px solid #ddd; /* Subtle border */
+    border-radius: 25px; /* Rounded edges for the input */
+    background-color: #ffffff; /* White background for the input */
+    transition: border-color 0.3s; /* Smooth transition for focus */
+    outline: none; /* Removes the default focus outline */
 }
 
+.message-input:focus {
+    border-color: #a2a2a2; /* Darker border on focus to indicate active state */
+}
 
+/* Send button styling */
 .send-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
+    padding: 10px 20px; /* Balanced padding for a good clickable area */
+    background-color: #000000; /* Bright, eye-catching blue */
+    color: gold; /* White text for contrast */
+    border: none; /* No border */
+    border-radius: 25px; /* Matching border-radius with the input field */
+    cursor: pointer; /* Indicates an interactive element */
+    font-size: 18px; /* Matches input text size */
+    font-weight: bold; /* Bold text for emphasis */
+    transition: background-color 0.2s, transform 0.2s; /* Smooth transitions for hover effects */
+    outline: none; /* Removes the default focus outline */
 }
 
 
-.send-button:hover {
-    background-color: #0056b3; /* Hover background color */
+
+
+
+/* Accessibility: Outline on focus for keyboard navigation */
+.send-button:focus-visible {
+    box-shadow: 0 0 0 3px rgba(66,153,225,0.6);
 }
