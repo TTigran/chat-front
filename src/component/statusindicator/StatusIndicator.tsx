@@ -1,12 +1,14 @@
 import React from 'react';
-import './index.css'
+import './index.css';
 
-function StatusIndicator({ isOnline }: {isOnline: boolean}) {
-  return (
-    <>
-      <div className={`${isOnline ? 'online' : 'offline'}`}></div>
-    </>
-  );
+interface StatusIndicatorProps {
+    isOnline: boolean;
 }
+
+const StatusIndicator: React.FC<StatusIndicatorProps> = ({ isOnline }) => {
+    return (
+        <div className={`status-indicator ${isOnline ? 'online' : 'offline'}`}></div>
+    );
+};
 
 export default StatusIndicator;

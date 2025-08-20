@@ -1,73 +1,98 @@
-
+/*
+* Body and full-screen container
+*/
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+}
 
 .parent-cont {
-    color: gold;
+    /*
+     * We use a linear gradient overlay to dim the image and make text pop.
+     * This is crucial for readability with a detailed background.
+     */
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url('https://img.freepik.com/free-photo/group-diverse-people-standing-holding-hands-together-community_53876-13769.jpg?w=1380&t=st=1690009581~exp=1690010181~hm=b8e4f1648a1c36b8a8b8d42d5f8c3d0b2f5b61e0b5c1f8d4e924c529d4793f0b') no-repeat center center fixed;
+    background-size: cover; /* Ensures the image covers the entire viewport */
+    height: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
-    height: 100vh;
-
+    align-items: center;
+    text-align: center;
 }
 
-form {
 
+/*
+* Heading for the page
+*/
+.parent-cont > div:first-child h1 {
+    color: #fff;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+    margin-bottom: 25px;
+    font-size: 2.8em;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
-input[type=text], input[type=password] {
+/*
+* Login form container
+*/
+.container {
+    /*
+     * Glassmorphism effect: A modern, semi-transparent look.
+     */
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+    width: 400px;
+    max-width: 90%;
+    padding: 40px;
+    backdrop-filter: blur(10px); /* Blurs the background behind the container */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/*
+* Form elements and button
+*/
+label {
+    color: #fff;
+    font-size: 1em;
+    font-weight: 500;
+    text-align: left;
+}
+
+input[type="text"],
+input[type="password"] {
     width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
 }
 
 button {
-    background-color: gold;
-    color: black;
-    padding: 14px 20px;
-    margin: 8px 0;
+    background-color: #5865f2; /* Your primary accent color */
+    color: white;
+    padding: 15px 20px;
     border: none;
     cursor: pointer;
     width: 100%;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
-    opacity: 0.8;
-}
-
-.cancelbtn {
-    width: auto;
-    padding: 10px 18px;
-    background-color: #f44336;
-}
-
-.imgcontainer {
-    text-align: center;
-    margin: 24px 0 12px 0;
-}
-
-img.avatar {
-    width: 40%;
-    border-radius: 50%;
-}
-
-.container {
-    padding: 16px;
-}
-
-span.psw {
-    float: right;
-    padding-top: 16px;
-}
-
-/* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
-    span.psw {
-        display: block;
-        float: none;
-    }
-    .cancelbtn {
-        width: 100%;
-    }
+    background-color: #4854e0;
+    transform: translateY(-2px);
 }

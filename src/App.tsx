@@ -174,61 +174,84 @@ function App() {
         })
     }
 
+    const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+    const toggleTheme = () => {
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+        document.documentElement.setAttribute('data-theme', newTheme);
+    };
 
     return (
         <>
-            {isLogged ?  <div>
-                <header>
-                    <div className="header-container-profile">
-                        <h1>{username}</h1>
-                        <div className="avatar-container">
+            {isLogged ? (
+                <div className="app-container">
+                    {/* Header */}
+                    <header className="app-header">
+                        <div className="header-left">
+                            <h1>{username}</h1>
+                            <button className="theme-toggle" onClick={toggleTheme}>
+                                {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
+                            </button>
+                        </div>
+                        <div className="header-right">
                             <div className="avatar">
                                 <img
-                                    src={userData ? userData.imageUrl: "https://img.freepik.com/premium-vector/anonymous-user-circle-icon-vector-illustration-flat-style-with-long-shadow_520826-1931.jpg"}
-                                    alt="Avatar"/>
+                                    src={
+                                        userData
+                                            ? userData.imageUrl
+                                            : "https://img.freepik.com/premium-vector/anonymous-user-circle-icon-vector-illustration-flat-style-with-long-shadow_520826-1931.jpg"
+                                    }
+                                    alt="Avatar"
+                                />
+                            </div>
+                            <div className="social-icons">
+                                <span>&#128172;</span>
+                                <span>&#128276;</span>
+                                <span>&#128640;</span>
                             </div>
                         </div>
-                        <div className="social-icons">
-                            <span className="social-icon">&#128172;</span>
-                            <span className="social-icon">&#128276;</span>
-                            <span className="social-icon">&#128640;</span>
-                        </div>
-                    </div>
-                </header>
+                    </header>
 
-                <div className='header'>
-                    <div className='header-container'>
-                        <div className='header-control-board'>
-                            <div className='rooms-container'>
-                                <div  className="rooms">
-                                    <input type='button' value='+' onClick={addRoom}/>
-                                </div>
-                                <div className="rooms">
-                                    <input type='button' value='general' onClick={toJoin}/>
-                                </div>
+                    {/* Main Layout */}
+                    <div className="chat-layout">
+                        {/* Sidebar */}
+                        <aside className="sidebar">
+                            <div className="sidebar-header">Rooms</div>
+                            <div className="rooms">
+                                <input type="button" value="+" onClick={addRoom} />
+                                <input type="button" value="general" onClick={toJoin} />
                                 {toCollect()}
                             </div>
-                        </div>
+                        </aside>
+
+                        {/* Chat Container */}
+                        <main className="chat-container">
+                            <div className="messages">
+                                <Messages
+                                    socketId={socket?.id as string}
+                                    onlineClient={onlineClient}
+                                    chatHistory={data}
+                                    roomID={room}
+                                    messages={messages}
+                                    loggedInUsername={username}
+                                />
+                            </div>
+                            <div className="chat-input">
+                                <MessageInput send={send} />
+                            </div>
+                        </main>
                     </div>
                 </div>
-
-                <>
-                    <Messages
-                        socketId={socket?.id as string}
-                        onlineClient={onlineClient}
-                        chatHistory={data}
-                        roomID={room}
-                        messages={messages}
-                    />
-                    <MessageInput send={send}/>
-                </>
-            </div> : <Login
-                username={username}
-                password={password}
-                onLogin={handleSubmit}
-                handleUsernameChange={handleUsernameChange}
-                handlePasswordChange={handlePasswordChange}
-            /> }
+            ) : (
+                <Login
+                    username={username}
+                    password={password}
+                    onLogin={handleSubmit}
+                    handleUsernameChange={handleUsernameChange}
+                    handlePasswordChange={handlePasswordChange}
+                />
+            )}
         </>
     );
 };
