@@ -69,3 +69,60 @@
         width: 100%;
     }
 }
+
+.emoji-button {
+    width: 20px;
+    background: transparent; /* No background color */
+    border: none; /* No border */
+    font-size: 1.8em; /* Sets the emoji size */
+    cursor: pointer; /* Changes the cursor to a pointer on hover */
+    transition: transform 0.2s ease, background-color 0.2s ease; /* Smooth animations */
+    margin-right: 10px;
+    padding: 10px; /* Provides a larger, more comfortable click area */
+    border-radius: 50%; /* Makes the button a perfect circle */
+    color: var(--text-color); /* Uses your theme's text color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.emoji-button:hover {
+    transform: scale(1.1); /* Gently scales up on hover */
+    background-color: var(--secondary-color); /* A subtle background color on hover */
+}
+
+.emoji-button:active {
+    transform: scale(0.95); /* A slight press effect on click */
+}
+
+.emoji-picker-wrapper {
+    position: absolute;
+    /*
+     * Positions the picker just above the message input field.
+     * We subtract the picker's height to ensure it's fully visible.
+     */
+    bottom: 80px;
+    left: 20px;
+    z-index: 1000; /* Ensures the picker appears on top of other content */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden; /* Hides any overflow from the picker's contents */
+    /*
+     * Adds a smooth fade-in and slide-up animation for a professional look.
+     */
+    animation: fadeIn 0.3s ease-out;
+}
+
+/*
+* Animation for the picker's appearance
+*/
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

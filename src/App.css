@@ -396,3 +396,11 @@ html, body, #root {
     background-color: var(--hover-effect);
     transform: scale(1.05);
 }
+
+.messages {
+    flex: 1; /* Allows the messages div to take up the remaining space */
+    overflow-y: auto; /* Adds a vertical scrollbar when content overflows */
+    padding: 20px;
+    -webkit-overflow-scrolling: touch; /* Improves scrolling on iOS devices */
+}
+
